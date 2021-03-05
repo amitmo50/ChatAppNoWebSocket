@@ -1,0 +1,67 @@
+
+  html, body {
+    font-family: 'Roboto', sans-serif;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #root {
+    height: 100vh;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  .outerLoginContainer {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    align-items: center;
+    background-color: #1A1A1D;
+  }
+  
+  .innerLoginContainer {
+    width: 20%;
+  }
+
+  .heading {
+    color: white;
+    font-size: 2.5em;
+    padding-bottom: 10px;
+    border-bottom: 2px solid white;
+  }
+  
+  @media (min-width: 270px) and (max-width: 319px) {
+    .outerLoginContainer {
+      height: 100%;
+    }
+  
+    .innerLoginContainer {
+      width: 85%;
+    }
+    .heading {
+      font-size: 1.8em;
+    }
+  }
+
+  @media (min-width: 320px) and (max-width: 780px) {
+    .outerLoginContainer {
+      height: 100%;
+    }
+  
+    .innerLoginContainer {
+      width: 90%;
+    }
+  }
+
+  @media (min-width: 781px) and (max-width: 1600px) {
+    .outerLoginContainer {
+      height: 100%;
+    }
+  
+    .innerLoginContainer {
+      width: 60%;
+    }
+  }
