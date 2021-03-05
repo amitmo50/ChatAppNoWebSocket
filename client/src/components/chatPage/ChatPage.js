@@ -12,7 +12,7 @@ const ChatPage = ({ location }) => {
     const [name, setName] = useState('');
     const [room, setRoom] = useState('');
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState([{text: "Hi", user: "Amit"},{text: "Hello", user: "Aviv"}]);
+    const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState([]);
     const [currentUser, setCurrentUser] = useState(null)
     
