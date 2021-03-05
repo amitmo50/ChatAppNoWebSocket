@@ -14,8 +14,9 @@ const ChatPage = ({ location }) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState([]);
-    const [currentUser, setCurrentUser] = useState(null)
-    
+    const [currentUser, setCurrentUser] = useState(null);
+
+    /* Handle Connection of user */
     useEffect(() => {
         const {name, room} = queryString.parse(location.search);
         setName(name);
@@ -23,11 +24,29 @@ const ChatPage = ({ location }) => {
         axios
         .post('/api/login' , { userName: name, room: room})
         .then(res => {
+            if(res.data === 'Username is taken') {
+                alert(res.data);
+                window.location = "/";
+                return;
+            }
             setCurrentUser(res.data);
         })
         .catch(error => console.warn(error));
     }, [location.search]);
 
+    /* Handle get all messages in room when first login*/
+    useEffect(() => {
+        if (!currentUser) {
+            return;
+        }
+        axios.get('/api/all-messages', { 
+            params: { room: room }
+        }).then((res) => {
+            setMessages([...messages, ...res.data]);
+        });
+    }, [currentUser])
+
+    /* Handle Logout of a user */
     const handleLogoutUser = () => {
         if (!currentUser) {
             return;
@@ -37,25 +56,15 @@ const ChatPage = ({ location }) => {
             setUsers(res.data);
         })
     }
-
-    useEffect(() => {
-        if (!currentUser) {
-            return;
-        }
-
-        axios.get('/api/messages', { 
-            params: { room: room, userId: currentUser.id }
-        })
-        .then(res => setMessages(res.data));
-    }, [currentUser, room]);
     
+    /* Handle long polling for get the recent messages */
     useEffect(() => {
         if (!currentUser) {
             return;
         }
 
        const intervalId = setInterval(() => {
-           axios.get('/api/messages', { 
+           axios.get('/api/new-messages', { 
                 params: { room: room, userId: currentUser.id }
             }).then((res) => {
                 setMessages([...messages, ...res.data]);
@@ -68,6 +77,7 @@ const ChatPage = ({ location }) => {
        }
     });
 
+    /* Handle getting the user in the room */
     useEffect(() => {
         axios
         .get('/api/users', { params: { room: room }})
@@ -76,6 +86,7 @@ const ChatPage = ({ location }) => {
 
     }, [room, messages]);
     
+    /* Handle sending Message */
     const sendMessage = (e) => {
         e.preventDefault();
         axios
@@ -84,7 +95,7 @@ const ChatPage = ({ location }) => {
         .catch(err => console.warn(err));
         setMessage('');
     }
-    console.log("currentUser", currentUser);
+    
     return (
         <>
             {currentUser && 

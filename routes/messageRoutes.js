@@ -7,10 +7,13 @@ module.exports = (app) => {
         room = req.body.room;
         userName = req.body.userName;
         const {error, user} = addUser({id: uniqid() , userName, room})
-        if(error) return;
+        if(error) {
+            res.send(error);
+            return;
+        }
         let id = 0;
         messageEventEmitter.emit('connection', id , room, userName);
-        res.send(user)
+        res.send(user);
     });
 
 
@@ -24,7 +27,14 @@ module.exports = (app) => {
         res.send(removeUser(id));
     });
 
-    app.get('/api/messages', (req, res) => {
+    app.get('/api/all-messages', (req, res) => {
+        if(!messages[req.query.room]) {
+            return res.send([]);
+        }
+        res.status(200).send(messages[req.query.room]);
+   });
+
+    app.get('/api/new-messages', (req, res) => {
         if(!messages[req.query.room]) {
             return res.send([]);
         }

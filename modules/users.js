@@ -13,7 +13,7 @@ const addUser = ({id, userName, room}) => {
 
     const existingUser = Object.keys(users).find((userKey) => users[userKey].room === room && users[userKey].userName === userName);
     if(existingUser) {
-        return ({error: 'Username is taken'});
+        return {error: 'Username is taken'};
     }
     users[0].room = room;
     users[0].lastConnection = new Date();

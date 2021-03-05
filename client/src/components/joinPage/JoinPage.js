@@ -57,7 +57,6 @@ const JoinPage = () => {
                     value={room}
                     onChange={(e) => setRoom(e.target.value)}
                     >
-                        <MenuItem value=""/>
                         <MenuItem value={"Room1"}>Room1</MenuItem>
                         <MenuItem value={"Room2"}>Room2</MenuItem>
                     </Select>
