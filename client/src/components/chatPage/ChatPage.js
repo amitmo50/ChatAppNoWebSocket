@@ -21,8 +21,10 @@ const ChatPage = ({ location }) => {
         const {name, room} = queryString.parse(location.search);
         setName(name);
         setRoom(room);
-        axios
-        .post('/api/login' , { userName: name, room: room})
+        axios.post('/api/login' , { 
+                userName: name, 
+                room: room
+        })
         .then(res => {
             if(res.data === 'Username is taken') {
                 alert(res.data);
@@ -77,7 +79,7 @@ const ChatPage = ({ location }) => {
        }
     });
 
-    /* Handle getting the user in the room */
+    /* Handle getting the users in the room */
     useEffect(() => {
         axios
         .get('/api/users', { params: { room: room }})

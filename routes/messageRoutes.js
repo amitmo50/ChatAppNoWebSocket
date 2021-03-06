@@ -16,7 +16,6 @@ module.exports = (app) => {
         res.send(user);
     });
 
-
     app.get('/api/users', (req, res) => {
         const room = req.query.room;
         res.send(getUsersInRoom(room));
@@ -24,11 +23,13 @@ module.exports = (app) => {
 
     app.post('/api/logout', (req, res) => {
         id = req.body.id;
+        let adminId = 0;
+        messageEventEmitter.emit('disconnection', adminId , room, userName);
         res.send(removeUser(id));
     });
 
     app.get('/api/all-messages', (req, res) => {
-        if(!messages[req.query.room]) {
+        if(!messages[req.query.room]) { 
             return res.send([]);
         }
         res.status(200).send(messages[req.query.room]);
