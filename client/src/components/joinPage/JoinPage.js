@@ -44,12 +44,13 @@ const JoinPage = () => {
 
     
     const classes = useStyles();
-
+    const handleChange = e => setUser(e.target.value);
+    
     return (
       <div className="outerLoginContainer">
           <div className="innerLoginContainer">
               <h1 className="heading">Join Chat App</h1>
-              <div><TextField variant="outlined" placeholder="Name" className={classes.joinInput} value={user} type="text" onChange={(e) => setUser(e.target.value)}></TextField></div>
+              <div><TextField variant="outlined" placeholder="Name" className={classes.joinInput} value={user} type="text" onChange={handleChange}></TextField></div>
               <div>
                 <FormControl variant="outlined" className={classes.joinInputSecond}>
                     <InputLabel id="input-label">Room</InputLabel>

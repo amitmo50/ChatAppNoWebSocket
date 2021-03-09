@@ -15,7 +15,7 @@ const ChatPage = ({ location }) => {
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
-
+    
     /* Handle Connection of user */
     useEffect(() => {
         const {name, room} = queryString.parse(location.search);
@@ -38,6 +38,7 @@ const ChatPage = ({ location }) => {
 
     /* Handle get all messages in room when first login*/
     useEffect(() => {
+        
         if (!currentUser) {
             return;
         }
@@ -69,8 +70,10 @@ const ChatPage = ({ location }) => {
            axios.get('/api/new-messages', { 
                 params: { room: room, userId: currentUser.id }
             }).then((res) => {
-                setMessages([...messages, ...res.data]);
-                console.log(messages);
+                console.log(res.data)
+                if(res.data.length !== 0){
+                    setMessages([...messages, ...res.data]);
+                }
             });
        }, 5000);
 
@@ -81,6 +84,7 @@ const ChatPage = ({ location }) => {
 
     /* Handle getting the users in the room */
     useEffect(() => {
+        
         axios
         .get('/api/users', { params: { room: room }})
         .then(res => setUsers(res.data))

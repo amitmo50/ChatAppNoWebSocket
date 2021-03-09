@@ -31,11 +31,13 @@ const useStyles = makeStyles(theme => ({
 
 const Input = ({sendMessage, message, setMessage}) => {
     const classes = useStyles();
-    
+    const handleChange = e => setMessage(e.target.value);
+    const handleClick = e => sendMessage(e.target.value);
+    const handlePress = e => e.key === 'Enter'? sendMessage(e): null;
     return (
         <form className="form">
-            <TextField variant="outlined" type="text" className={classes.input} placeholder="Type a message..." value={message} onChange={(e) => setMessage(e.target.value)} onKeyPress={(e) => e.key === 'Enter'? sendMessage(e): null}/>
-            <Button className={classes.sendButton} onClick={(e) => sendMessage(e)}><SendIcon/></Button>
+            <TextField variant="outlined" type="text" className={classes.input} placeholder="Type a message..." value={message} onChange={handleChange} onKeyPress={handlePress}/>
+            <Button className={classes.sendButton} onClick={handleClick}><SendIcon/></Button>
         </form>
     );
 }

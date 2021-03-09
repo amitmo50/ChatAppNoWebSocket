@@ -9,8 +9,8 @@ messageEventEmitter.on('newMessage', (id, room, from, message) => {
     messages[room] = [...messages[room], {id, from, message, createdAt: new Date()}];
 });
 messageEventEmitter.on('connection', (id, room, userName) => {
-    let message = `Wolcome ${userName} to the room ${room}`;
-    let from = 'Admin';
+    const message = `Wolcome ${userName} to the room ${room}`;
+    const from = 'Admin';
     if(!messages[room]) {
         messages[room] = [{id, from, message, createdAt: new Date()}];
         return
@@ -19,8 +19,8 @@ messageEventEmitter.on('connection', (id, room, userName) => {
 });
 
 messageEventEmitter.on('disconnection', (id, room, userName) => {
-    let message = `${userName} has left the room ${room}`;
-    let from = 'Admin';
+    const message = `${userName} has left the room ${room}`;
+    const from = 'Admin';
     if(!messages[room]) {
         messages[room] = [{id, from, message, createdAt: new Date()}];
         return
